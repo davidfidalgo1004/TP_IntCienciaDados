@@ -21,7 +21,7 @@ Para instalar, pode usar: pip install pandas matplotlib numpy scikit-learn
 
 # Importação das bibliotecas necessárias
 import pandas as pd  # Para manipulação e análise de dados (DataFrames)
-import matplotlib.pyplot as plt  # Para criação de gráficos
+import matplotlib.pyplot as matplt  # Para criação de gráficos
 import numpy as np  # Para operações numéricas, especialmente com arrays
 from sklearn.model_selection import train_test_split  # Para dividir dados em treino e teste (ML)
 from sklearn.linear_model import LinearRegression  # Para criar o modelo de Regressão Linear (ML)
@@ -78,8 +78,7 @@ print("----------------------------------------------------")
 df_filtrado['Year'] = pd.to_numeric(df_filtrado['Year'], errors='coerce')
 
 # Criar a figura e os eixos para o gráfico com um tamanho específico (largura 10, altura 6).
-plt.figure(figsize=(12, 7)) # Aumentado ligeiramente para melhor visualização
-
+matplt.figure(figsize=(12, 7))
 # Iterar sobre cada país na lista 'paises'.
 for pais in paises:
     # Filtrar o DataFrame 'df_filtrado' para obter os dados apenas do país atual.
@@ -87,26 +86,26 @@ for pais in paises:
     # Plotar a evolução: 'Year' no eixo X, 'Total Water Consumption' no eixo Y.
     # marker='o' adiciona um marcador circular em cada ponto de dados.
     # label=pais define o nome que aparecerá na legenda para esta linha.
-    plt.plot(df_pais['Year'], df_pais['Total Water Consumption (Billion Cubic Meters)'], marker='o', linestyle='-', label=pais)
+    matplt.plot(df_pais['Year'], df_pais['Total Water Consumption (Billion Cubic Meters)'], marker='o', linestyle='-', label=pais)
 
 # Adicionar rótulos aos eixos X e Y e um título ao gráfico.
-plt.xlabel("Ano")
-plt.ylabel("Consumo Total de Água (Bilhões de Metros Cúbicos)")
-plt.title("Evolução Anual do Consumo Total de Água (2000-2024) por País Selecionado")
+matplt.xlabel("Ano")
+matplt.ylabel("Consumo Total de Água (Bilhões de Metros Cúbicos)")
+matplt.title("Evolução Anual do Consumo Total de Água (2000-2024) por País Selecionado")
 
 # Adicionar uma legenda para identificar as linhas de cada país.
-plt.legend()
+matplt.legend()
 
 # Adicionar uma grelha ao fundo do gráfico para facilitar a leitura dos valores.
-plt.grid(True)
+matplt.grid(True)
 
 # Ajustar o layout para evitar que os rótulos se sobreponham.
-plt.tight_layout()
+matplt.tight_layout()
 
 # Exibir o gráfico gerado.
 print(f"--- Tarefa 2 Concluída ---")
 print("A exibir o gráfico da evolução do consumo total de água...")
-plt.show()
+matplt.show()
 print("----------------------------------------------------")
 
 
@@ -128,21 +127,21 @@ try:
     ]
 
     # Criar a figura para o gráfico circular com um tamanho específico (6x6).
-    plt.figure(figsize=(7, 7)) # Ligeiramente maior para clareza
+    matplt.figure(figsize=(7, 7)) # Ligeiramente maior para clareza
     # Criar o gráfico circular:
     # - valores: os dados a serem representados.
     # - labels: os rótulos para cada fatia.
     # - autopct='%1.1f%%': formata a percentagem a ser exibida em cada fatia (uma casa decimal).
     # - startangle=140: define o ângulo inicial da primeira fatia.
-    plt.pie(valores, labels=labels, autopct='%1.1f%%', startangle=140, wedgeprops={'edgecolor': 'black'}) # Adicionado contorno
+    matplt.pie(valores, labels=labels, autopct='%1.1f%%', startangle=140, wedgeprops={'edgecolor': 'black'}) # Adicionado contorno
 
     # Adicionar um título ao gráfico.
-    plt.title("Distribuição Percentual do Uso de Água em Espanha (2020)")
+    matplt.title("Distribuição Percentual do Uso de Água em Espanha (2020)")
 
     # Exibir o gráfico.
     print(f"--- Tarefa 3 Concluída ---")
     print("A exibir o gráfico circular da distribuição do uso de água em Espanha (2020)...")
-    plt.show()
+    matplt.show()
 
 # Se a linha para Spain em 2020 não for encontrada (IndexError), imprime uma mensagem.
 except IndexError:
@@ -187,18 +186,15 @@ def menor_uso_agricola(df_completo, nome_pais):
     # Retornar o ano e o valor mínimo.
     return int(ano_min), valor_min # Converte ano para inteiro para apresentação
 
-# Exemplo de utilização da função para o país 'Italy'.
 print(f"--- Tarefa 4: Teste da Função ---")
-pais_exemplo = "Italy"
-# Chama a função com o DataFrame completo 'df' e o nome do país.
-ano, valor = menor_uso_agricola(df, pais_exemplo)
+pais_selecionado = input("Digite um país:")
 
-# Verifica se a função retornou valores válidos (não None).
+ano, valor = menor_uso_agricola(df, pais_selecionado)
+
 if ano is not None:
-    print(f"Para o país '{pais_exemplo}', o menor valor de 'Agricultural Water Use' ({valor:.2f}%) ocorreu no ano {ano}.")
+    print(f"Para o país '{pais_selecionado}', o menor valor da coluna do uso da água na agricultura foi ({valor:.2f}%) ocorreu no ano {ano}.")
 else:
-    # Mensagem caso o país não tenha sido encontrado (já impressa dentro da função).
-    pass
+    print(f"País selecionado não encontrado")
 print("----------------------------------------------------")
 
 
@@ -209,14 +205,14 @@ print("----------------------------------------------------")
 df_scatter = df[['Industrial Water Use (%)', 'Groundwater Depletion Rate (%)']].dropna()
 
 # Criar a figura e os eixos para o gráfico de dispersão.
-plt.figure(figsize=(10, 6))
+matplt.figure(figsize=(10, 6))
 
 # Criar o gráfico de dispersão:
 # - Eixo X: 'Industrial Water Use (%)'.
 # - Eixo Y: 'Groundwater Depletion Rate (%)'.
 # - alpha=0.6: Define a transparência dos pontos (útil se houver sobreposição).
 # - label='Dados': Rótulo para a legenda.
-plt.scatter(df_scatter['Industrial Water Use (%)'], df_scatter['Groundwater Depletion Rate (%)'], alpha=0.6, label='Dados Observados')
+matplt.scatter(df_scatter['Industrial Water Use (%)'], df_scatter['Groundwater Depletion Rate (%)'], alpha=0.6, label='Dados Observados')
 
 # --- Cálculo e Plot da Regressão Linear ---
 # Extrair os valores das colunas como arrays NumPy para a função polyfit.
@@ -238,23 +234,23 @@ x_vals = np.linspace(x.min(), x.max(), 100)
 # Plotar a linha de regressão usando os x_vals gerados e a função linha_regressao(x_vals).
 # color='red': Define a cor da linha.
 # label=...: Cria um rótulo para a legenda que inclui a equação da linha formatada.
-plt.plot(x_vals, linha_regressao(x_vals), color='red', linewidth=2,
+matplt.plot(x_vals, linha_regressao(x_vals), color='red', linewidth=2,
          label=f'Regressão Linear: y = {coef[0]:.3f}x + {coef[1]:.3f}') # Mais casas decimais para precisão
 
 # Adicionar rótulos aos eixos e título ao gráfico.
-plt.xlabel("Utilização Industrial de Água (%)")
-plt.ylabel("Taxa de Esgotamento das Águas Subterrâneas (%)")
-plt.title("Relação entre Uso Industrial de Água e Taxa de Esgotamento das Águas Subterrâneas")
+matplt.xlabel("Utilização Industrial de Água (%)")
+matplt.ylabel("Taxa de Esgotamento das Águas Subterrâneas (%)")
+matplt.title("Relação entre Uso Industrial de Água e Taxa de Esgotamento das Águas Subterrâneas")
 
 # Adicionar legenda e grelha.
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
+matplt.legend()
+matplt.grid(True)
+matplt.tight_layout()
 
 # Exibir o gráfico.
 print(f"--- Tarefa 5 Concluída ---")
 print("A exibir o gráfico de dispersão com regressão linear...")
-plt.show()
+matplt.show()
 
 # --- Interpretação da Regressão Linear ---
 print("Interpretação da Regressão Linear:")
@@ -278,95 +274,40 @@ print("----------------------------------------------------")
 
 
 # --- Tarefa 6: Previsão com Machine Learning (Regressão Linear) ---
-print(f"--- Tarefa 6: Machine Learning para Prever 'Per Capita Water Use (Liters per Day)' ---")
-
-# --- Preparação dos Dados ---
-# Selecionar as colunas que serão usadas como 'features' (variáveis preditoras) e a coluna 'target' (variável a prever).
 features = ['Country', 'Agricultural Water Use (%)', 'Rainfall Impact (Annual Precipitation in mm)']
 target = 'Per Capita Water Use (Liters per Day)'
-
-# Criar um novo DataFrame contendo apenas as colunas de interesse.
-# .dropna() remove linhas que tenham valor nulo em *qualquer* uma destas colunas,
-# pois modelos de ML geralmente não lidam bem com dados em falta.
 df_ml = df[features + [target]].dropna()
-print(f"Número de amostras após remover nulos nas colunas de interesse: {len(df_ml)}")
 
-# --- Engenharia de Features: One-Hot Encoding ---
-# A variável 'Country' é categórica (texto). Modelos de regressão linear exigem dados numéricos.
-# Usamos One-Hot Encoding para converter a coluna 'Country' em múltiplas colunas binárias (0 ou 1).
-# Cada nova coluna representa um país específico.
-# pd.get_dummies faz esta conversão automaticamente.
-# drop_first=True remove a primeira categoria para evitar multicolinearidade (uma coluna pode ser inferida das outras).
-df_ml_encoded = pd.get_dummies(df_ml, columns=['Country'], drop_first=True, prefix='Country')
-print(f"Colunas após One-Hot Encoding da variável 'Country': {df_ml_encoded.columns.tolist()}")
+# 2. Converter a variável categórica "Country" para numérica via One-Hot Encoding.
+df_ml_encoded = pd.get_dummies(df_ml, columns=['Country'], drop_first=True)
 
-# --- Divisão dos Dados: Treino e Teste ---
-# Separar o DataFrame codificado em 'X' (features) e 'y' (target).
-# X contém todas as colunas exceto a 'target'.
-# y contém apenas a coluna 'target'.
+# 3. Dividir os dados em conjuntos de treino (80%) e teste (20%).
 X = df_ml_encoded.drop(target, axis=1)
 y = df_ml_encoded[target]
-
-# Dividir os dados X e y em conjuntos de treino e teste.
-# O conjunto de treino é usado para 'ensinar' o modelo.
-# O conjunto de teste é usado para avaliar o desempenho do modelo em dados não vistos.
-# test_size=0.2 significa que 20% dos dados serão usados para teste, e 80% para treino.
-# random_state=42 garante que a divisão seja a mesma sempre que o código for executado (reprodutibilidade).
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-print(f"Tamanho do conjunto de treino: {X_train.shape[0]} amostras")
-print(f"Tamanho do conjunto de teste: {X_test.shape[0]} amostras")
 
-# --- Treino do Modelo: Regressão Linear ---
-# Técnica utilizada: Regressão Linear Múltipla.
-# Este modelo tenta encontrar a melhor relação linear entre as features (X) e o target (y).
-# Assume-se que y pode ser previsto como uma soma ponderada das features mais uma constante (intercepção).
-# y = b0 + b1*X1 + b2*X2 + ... + bn*Xn
+# 4. Treinar o modelo de Regressão Linear.
+model = LinearRegression()
+model.fit(X_train, y_train)
 
-# Criar uma instância do modelo de Regressão Linear.
-modelo = LinearRegression()
-
-# Treinar o modelo usando os dados de treino (X_train, y_train).
-# O método .fit() ajusta os coeficientes (pesos) do modelo para minimizar a diferença
-# entre as previsões do modelo e os valores reais de y_train.
-print("A treinar o modelo de Regressão Linear...")
-modelo.fit(X_train, y_train)
-print("Modelo treinado com sucesso.")
-
-# Opcional: Exibir os coeficientes aprendidos pelo modelo
-print("Coeficientes do modelo (pesos das features):")
-# print(pd.DataFrame(modelo.coef_, index=X.columns, columns=['Coeficiente']))
-# print(f"Intercepção do modelo: {modelo.intercept_:.2f}")
-
-# --- Avaliação do Modelo ---
-# Fazer previsões no conjunto de teste (dados que o modelo não viu durante o treino).
-y_pred = modelo.predict(X_test)
-
-# Calcular métricas de avaliação para comparar os valores previstos (y_pred) com os valores reais (y_test).
-# - Mean Squared Error (MSE): Média dos quadrados das diferenças entre previsão e real. Penaliza erros grandes.
-#   Quanto menor, melhor. A unidade é o quadrado da unidade do target.
+# 5. Avaliar o desempenho do modelo.
+y_pred = model.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
-# - R-squared (R²): Coeficiente de determinação. Indica a proporção da variância no target que é
-#   explicável pelas features no modelo. Varia entre -inf e 1.
-#   Um valor de 1 significa previsão perfeita. Um valor de 0 significa que o modelo não é melhor
-#   que simplesmente prever a média do target. Valores negativos indicam um modelo muito mau.
 r2 = r2_score(y_test, y_pred)
 
-print("--- Avaliação do Desempenho do Modelo no Conjunto de Teste ---")
+# Exibir resultados e interpretações.
+print("Previsão de 'Per Capita Water Use'")
+print(f"Número total de amostras: {len(df_ml)}")
+print(f"Treino: {X_train.shape[0]} amostras | Teste: {X_test.shape[0]} amostras")
 print(f"Mean Squared Error (MSE): {mse:.2f}")
 print(f"R-squared (R²): {r2:.3f}")
 
-# Interpretação dos Resultados:
-print("Interpretação dos Resultados da Previsão:")
-print(f"- O MSE de {mse:.2f} indica o erro quadrático médio das previsões.")
-print(f"- O R² de {r2:.3f} sugere que aproximadamente {r2*100:.1f}% da variabilidade no '{target}' "
-      f"pode ser explicada pelas variáveis 'Country', 'Agricultural Water Use (%)', e 'Rainfall Impact (Annual Precipitation in mm)' "
-      f"através deste modelo linear, nos dados de teste.")
 if r2 > 0.7:
-    print("  Este é um valor de R² relativamente alto, indicando um bom ajuste do modelo aos dados.")
+    print("Bom ajuste do modelo.")
 elif r2 > 0.4:
-    print("  Este valor de R² indica um ajuste moderado do modelo aos dados.")
+    print("Ajuste moderado do modelo.")
 else:
-    print("  Este valor de R² indica um ajuste fraco do modelo. Outras variáveis ou modelos mais complexos podem ser necessários para uma melhor previsão.")
+    print("Ajuste fraco; considerar incluir mais variáveis ou modelos mais complexos.")
 
 print("--- Tarefa 6 Concluída ---")
 print("----------------------------------------------------")
