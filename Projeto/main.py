@@ -1,7 +1,7 @@
 """
 
 Bernardo Almeida, al78403
-David Fidalgo, al
+David Fidalgo, al79881
 Tiago Valente al78800
 Vasco Macedo al78798
 
@@ -19,11 +19,9 @@ Trabalho Experimental 1, "Global Water Consumption Dataset (2000-2024)":
      com base nas variáveis "Country", "Agricultural Water Use" e "Rainfall Impact".
 
 """
-
-# Importação das bibliotecas necessárias
-import pandas as pd  # Para manipulação e análise de dados (DataFrames)
-import matplotlib.pyplot as matplt  # Para criação de gráficos
-import numpy as np  # Para operações numéricas, especialmente com arrays
+import pandas as pd  
+import matplotlib.pyplot as matplt  
+import numpy as np  
 from sklearn.model_selection import train_test_split  # Para dividir dados em treino e teste (ML)
 from sklearn.metrics import mean_squared_error, r2_score  # Para avaliar o modelo de ML
 from sklearn.linear_model import LinearRegression  # Para criar o modelo de Regressão Linear (ML)
@@ -31,14 +29,9 @@ from sklearn.linear_model import Lasso
 from sklearn.linear_model import ElasticNet
 
 # --- Tarefa 1: Carregar, Filtrar e Guardar Dados ---
-
-# Carregar o dataset completo a partir do ficheiro CSV para um DataFrame do pandas.
-# O ficheiro "cleaned_global_water_consumption.csv" deve estar no mesmo diretório que o script,
-# ou o caminho completo deve ser fornecido.
 df = pd.read_csv("cleaned_global_water_consumption.csv")
 
 
-# Exibir informações básicas sobre o DataFrame carregado:
 # - df.shape: Retorna um tuple com o número de linhas e colunas.
 # - df.columns.tolist(): Lista os nomes de todas as colunas.
 # - df.head(): Mostra as primeiras 5 linhas do DataFrame por defeito.
@@ -96,17 +89,11 @@ for pais in paises:
 matplt.xlabel("Ano")
 matplt.ylabel("Consumo Total de Água (Bilhões de Metros Cúbicos)")
 matplt.title("Evolução Anual do Consumo Total de Água (2000-2024) por País Selecionado")
-
-# Adicionar uma legenda para identificar as linhas de cada país.
 matplt.legend()
-
-# Adicionar uma grelha ao fundo do gráfico para facilitar a leitura dos valores.
 matplt.grid(True)
 
-# Ajustar o layout para evitar que os rótulos se sobreponham.
 matplt.tight_layout()
 
-# Exibir o gráfico gerado.
 print(f"--- Tarefa 2 Concluída ---")
 print("A exibir o gráfico da evolução do consumo total de água...")
 matplt.show()
@@ -117,37 +104,21 @@ print("----------------------------------------------------")
 
 # Utiliza-se um bloco try-except para lidar com o caso de não existirem dados para Spain em 2020.
 try:
-    # Filtrar o DataFrame original ('df') para encontrar a linha correspondente a 'Spain' e 'Year' 2020.
-    # .iloc[0] seleciona a primeira (e única esperada) linha que corresponde aos critérios.
     dados_spain_2020 = df[(df['Country'] == 'Spain') & (df['Year'] == 2020)].iloc[0]
-
-    # Definir os rótulos (labels) para as fatias do gráfico circular.
     labels = ['Uso Agrícola (%)', 'Uso Industrial (%)', 'Uso Doméstico (%)']
-    # Extrair os valores correspondentes do DataFrame filtrado.
     valores = [
         dados_spain_2020['Agricultural Water Use (%)'],
         dados_spain_2020['Industrial Water Use (%)'],
         dados_spain_2020['Household Water Use (%)']
     ]
 
-    # Criar a figura para o gráfico circular com um tamanho específico (6x6).
-    matplt.figure(figsize=(7, 7)) # Ligeiramente maior para clareza
-    # Criar o gráfico circular:
-    # - valores: os dados a serem representados.
-    # - labels: os rótulos para cada fatia.
-    # - autopct='%1.1f%%': formata a percentagem a ser exibida em cada fatia (uma casa decimal).
-    # - startangle=140: define o ângulo inicial da primeira fatia.
-    matplt.pie(valores, labels=labels, autopct='%1.1f%%', startangle=140, wedgeprops={'edgecolor': 'black'}) # Adicionado contorno
-
-    # Adicionar um título ao gráfico.
+    matplt.figure(figsize=(7, 7))
+    matplt.pie(valores, labels=labels, autopct='%1.1f%%', startangle=140, wedgeprops={'edgecolor': 'black'}) 
     matplt.title("Distribuição Percentual do Uso de Água em Espanha (2020)")
 
-    # Exibir o gráfico.
     print(f"--- Tarefa 3 Concluída ---")
     print("A exibir o gráfico circular da distribuição do uso de água em Espanha (2020)...")
     matplt.show()
-
-# Se a linha para Spain em 2020 não for encontrada (IndexError), imprime uma mensagem.
 except IndexError:
     print(f"--- Tarefa 3 Falhou ---")
     print("Não foram encontrados dados para 'Spain' no ano 2020 no dataset.")
@@ -169,26 +140,20 @@ def menor_uso_agricola(df_completo, nome_pais):
       tuple: (ano_min, valor_min) - O ano e o valor mínimo encontrado.
              Retorna (None, None) se o país não for encontrado no DataFrame.
     """
-    # Filtrar o DataFrame para obter apenas os dados do país especificado.
+    
     df_country = df_completo[df_completo['Country'] == nome_pais]
-
-    # Verificar se o DataFrame filtrado está vazio (país não encontrado).
     if df_country.empty:
         print(f"Aviso: Não foram encontrados dados para o país '{nome_pais}'.")
-        return None, None # Retorna None para indicar que não encontrou
-
-    # Encontrar o índice da linha onde 'Agricultural Water Use (%)' tem o valor mínimo.
+        return None, None 
+    
     idx_min = df_country['Agricultural Water Use (%)'].idxmin()
 
-    # Localizar a linha completa correspondente a esse índice mínimo.
     linha_min = df_country.loc[idx_min]
 
-    # Extrair o ano ('Year') e o valor mínimo ('Agricultural Water Use (%)') dessa linha.
     ano_min = linha_min['Year']
     valor_min = linha_min['Agricultural Water Use (%)']
 
-    # Retornar o ano e o valor mínimo.
-    return int(ano_min), valor_min # Converte ano para inteiro para apresentação
+    return int(ano_min), valor_min 
 
 print(f"--- Tarefa 4: Teste da Função ---")
 pais_selecionado = input("Digite um país:")
