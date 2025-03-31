@@ -24,8 +24,10 @@ import pandas as pd  # Para manipulação e análise de dados (DataFrames)
 import matplotlib.pyplot as matplt  # Para criação de gráficos
 import numpy as np  # Para operações numéricas, especialmente com arrays
 from sklearn.model_selection import train_test_split  # Para dividir dados em treino e teste (ML)
-from sklearn.linear_model import LinearRegression  # Para criar o modelo de Regressão Linear (ML)
 from sklearn.metrics import mean_squared_error, r2_score  # Para avaliar o modelo de ML
+from sklearn.linear_model import LinearRegression  # Para criar o modelo de Regressão Linear (ML)
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import ElasticNet
 
 # --- Tarefa 1: Carregar, Filtrar e Guardar Dados ---
 
@@ -33,6 +35,7 @@ from sklearn.metrics import mean_squared_error, r2_score  # Para avaliar o model
 # O ficheiro "cleaned_global_water_consumption.csv" deve estar no mesmo diretório que o script,
 # ou o caminho completo deve ser fornecido.
 df = pd.read_csv("cleaned_global_water_consumption.csv")
+
 
 # Exibir informações básicas sobre o DataFrame carregado:
 # - df.shape: Retorna um tuple com o número de linhas e colunas.
@@ -287,7 +290,9 @@ y = df_ml_encoded[target]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # 4. Treinar o modelo de Regressão Linear.
-model = LinearRegression()
+#model = LinearRegression()
+#model = Lasso(alpha=1.0)
+model = ElasticNet(alpha=1.0, l1_ratio=0.50)
 model.fit(X_train, y_train)
 
 # 5. Avaliar o desempenho do modelo.
