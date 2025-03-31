@@ -1,7 +1,11 @@
-# -*- coding: utf-8 -*-
 """
-Script completo para análise do dataset "Global Water Consumption Dataset (2000-2024)".
-Este script realiza as seguintes tarefas, conforme solicitado para o Trabalho Experimental 1:
+
+Bernardo Almeida, al78403
+David Fidalgo, al
+Tiago Valente al78800
+Vasco Macedo al78798
+
+Trabalho Experimental 1, "Global Water Consumption Dataset (2000-2024)":
   1. Carrega o ficheiro CSV completo, exibe informações iniciais e cria um novo DataFrame
      filtrado por países específicos (Italy, Japan, Spain, UK, USA), guardando-o num novo CSV.
   2. Plota a evolução do "Total Water Consumption" ao longo dos anos para os países selecionados.
@@ -10,13 +14,10 @@ Este script realiza as seguintes tarefas, conforme solicitado para o Trabalho Ex
   4. Define uma função que retorna o ano e o valor da menor percentagem de "Agricultural Water Use"
      para um país fornecido como entrada.
   5. Plota um gráfico de dispersão com uma linha de regressão linear entre "Industrial Water Use" e
-     "Groundwater Depletion Rate", utilizando o dataset completo, e interpreta a regressão.
+     "Groundwater Depletion Rate", utilizando o dataset completo.
   6. Utiliza técnicas de Machine Learning (Regressão Linear) para prever "Per Capita Water Use"
-     com base nas variáveis "Country", "Agricultural Water Use" e "Rainfall Impact", documentando
-     o processo e avaliando os resultados.
+     com base nas variáveis "Country", "Agricultural Water Use" e "Rainfall Impact".
 
-Certifique-se de ter os pacotes pandas, matplotlib, numpy e scikit-learn instalados.
-Para instalar, pode usar: pip install pandas matplotlib numpy scikit-learn
 """
 
 # Importação das bibliotecas necessárias
@@ -255,24 +256,6 @@ print(f"--- Tarefa 5 Concluída ---")
 print("A exibir o gráfico de dispersão com regressão linear...")
 matplt.show()
 
-# --- Interpretação da Regressão Linear ---
-print("Interpretação da Regressão Linear:")
-# O coeficiente coef[0] (declive) indica a mudança média esperada em Y para uma mudança unitária em X.
-print(f"- O declive da linha de regressão é aproximadamente {coef[0]:.3f}.")
-if coef[0] > 0.01:
-    print("  Isto sugere que, em média, um aumento de 1 ponto percentual na Utilização Industrial de Água está associado a um aumento de aproximadamente "
-          f"{coef[0]:.3f} pontos percentuais na Taxa de Esgotamento das Águas Subterrâneas, considerando os dados disponíveis.")
-elif coef[0] < -0.01:
-    print("  Isto sugere que, em média, um aumento de 1 ponto percentual na Utilização Industrial de Água está associado a uma diminuição de aproximadamente "
-          f"{-coef[0]:.3f} pontos percentuais na Taxa de Esgotamento das Águas Subterrâneas, considerando os dados disponíveis.")
-else:
-    print("  Isto sugere que há pouca ou nenhuma associação linear entre a Utilização Industrial de Água e a Taxa de Esgotamento das Águas Subterrâneas "
-          "nestes dados.")
-# O coeficiente coef[1] (intercepção) é o valor esperado de Y quando X é 0.
-print(f"- A intercepção é aproximadamente {coef[1]:.3f}.")
-print("  Este valor representa a Taxa de Esgotamento das Águas Subterrâneas esperada quando a Utilização Industrial de Água é 0%, "
-      "embora esta interpretação possa não ser prática ou significativa dependendo do contexto dos dados.")
-print("- É importante notar que correlação não implica causalidade. Esta análise apenas mostra uma associação linear nos dados.")
 print("----------------------------------------------------")
 
 
@@ -289,7 +272,7 @@ X = df_ml_encoded.drop(target, axis=1)
 y = df_ml_encoded[target]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# 4. Treinar o modelo de Regressão Linear.
+# 4. Treinar o modelo escolhido. Aqui encontram-se 3 diferentes: Regressão Linear, Lasso e ElasticNet.
 #model = LinearRegression()
 #model = Lasso(alpha=1.0)
 model = ElasticNet(alpha=1.0, l1_ratio=0.50)
@@ -307,12 +290,6 @@ print(f"Treino: {X_train.shape[0]} amostras | Teste: {X_test.shape[0]} amostras"
 print(f"Mean Squared Error (MSE): {mse:.2f}")
 print(f"R-squared (R²): {r2:.3f}")
 
-if r2 > 0.7:
-    print("Bom ajuste do modelo.")
-elif r2 > 0.4:
-    print("Ajuste moderado do modelo.")
-else:
-    print("Ajuste fraco; considerar incluir mais variáveis ou modelos mais complexos.")
 
 print("--- Tarefa 6 Concluída ---")
 print("----------------------------------------------------")
