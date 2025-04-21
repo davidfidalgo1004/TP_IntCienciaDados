@@ -56,7 +56,7 @@ paises = ['Italy', 'Japan', 'Spain', 'UK', 'USA']
 
 # Filtrar o DataFrame original ('df') para manter apenas as linhas onde a coluna 'Country'
 # corresponde a um dos países na lista 'paises'.
-df_filtrado = df[df['Country'].isin(paises)].copy() # Usar .copy() para evitar SettingWithCopyWarning
+df_filtrado = df[df['Country'].isin(paises)].copy() 
 
 # Guardar o DataFrame filtrado num novo ficheiro CSV.
 # index=False evita que o índice do DataFrame seja escrito como uma coluna no CSV.
@@ -74,7 +74,7 @@ print("----------------------------------------------------")
 # Como usamos .copy() na criação de df_filtrado, este aviso é evitado.
 df_filtrado['Year'] = pd.to_numeric(df_filtrado['Year'], errors='coerce')
 
-# Criar a figura e os eixos para o gráfico com um tamanho específico (largura 10, altura 6).
+
 matplt.figure(figsize=(12, 7))
 # Iterar sobre cada país na lista 'paises'.
 for pais in paises:
